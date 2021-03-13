@@ -1,0 +1,24 @@
+
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+script:
+  - cd udagram-frontend
+  - docker build -t udagram-frontend .
+  - docker tag udagram-frontend evilvic/udagram-frontend:latest
+  - cd ../udagram-users
+  - docker build -t udagram-users .
+  - docker tag udagram-users evilvic/udagram-users:latest
+  - cd ../udagram-feed
+  - docker build -t udagram-feed .
+  - docker tag udagram-feed evilvic/udagram-feed:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push evilvic/udagram-frontend:latest
+  - docker push evilvic/udagram-users:latest
+  - docker push evilvic/udagram-feed:latest
