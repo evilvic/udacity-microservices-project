@@ -1,1 +1,3 @@
 set_env.sh
+.env
+.DS_Store
