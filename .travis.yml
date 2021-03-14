@@ -16,9 +16,13 @@ script:
   - cd ../udagram-feed
   - docker build -t udagram-feed .
   - docker tag udagram-feed evilvic/udagram-feed:latest
+  - cd ../udagram-reverse-proxy
+  - docker build -t udagram-reverse-proxy .
+  - docker tag udagram-reverse-proxy:latest evilvic/udagram-reverse-proxy
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push evilvic/udagram-frontend:latest
   - docker push evilvic/udagram-users:latest
   - docker push evilvic/udagram-feed:latest
+  - docker push evilvic/udagram-reverse-proxy
